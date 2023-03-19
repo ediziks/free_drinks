@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "free-drinks"
 version = "0.1.0"
-description = ""
+description = "Free drinks promotion estimator for vending machines"
 authors = ["zx <eemektas@gmail.com>"]
 readme = "README.md"
 packages = [{include = "free_drinks"}]
