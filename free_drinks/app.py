@@ -4,24 +4,15 @@ from typing import Tuple
 
 class FreeDrinks:
     """
-    A class to represent a free drinks promotion at vending machines.
+    A class to estimate free drinks promotion at vending machines.
     """
 
     def __init__(self, config_string: str):
-        """
-        Initializes a FreeDrinks object.
-
-        Args:
-            config_string (str): The configuration string for the promotion.
-
-        Example:
-            >>> free_drinks = FreeDrinks("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
-        """
         self.config_string = config_string
 
     def is_valid_day(self, day: str) -> bool:
         """
-        Check if a day string is valid (e.g. 'Mon').
+        Check if a day string is valid.
 
         Args:
             day (str): The day string to check.
@@ -46,7 +37,7 @@ class FreeDrinks:
 
     def is_valid_time_range(self, time_range: str) -> bool:
         """
-        Check if a time range string is valid (e.g. '0900-1100').
+        Check if a time range string is valid.
 
         Args:
             time_range (str): The time range string to check.
@@ -99,14 +90,14 @@ class FreeDrinks:
         Parse a config string into a dictionary of valid time ranges keyed by days.
 
         Returns:
-            dict: A dictionary of valid time ranges keyed by days.
+            dict: A dictionary of valid time ranges keyed by days and valued by list of time ranges.
 
         Example:
-            >>> parse_config_string("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
+            >>> parse_config_string()
             {
-                'mon': (datetime.time(12, 0), datetime.time(14, 0)),
-                'tue': (datetime.time(9, 0), datetime.time(11, 0)),
-                'fri': (datetime.time(0, 0), datetime.time(23, 59, 59, 999999))
+                'mon': [(datetime.time(12, 0), datetime.time(14, 0))],
+                'tue': [(datetime.time(9, 0), datetime.time(11, 0))],
+                'fri': [(datetime.time(0, 0), datetime.time(23, 59, 59, 999999))]
             }
         """
         day_ranges = {}
@@ -117,7 +108,11 @@ class FreeDrinks:
             time_range = config_string_list[i + 1]
             self.is_valid_time_range(time_range)
             self.is_valid_day(day)
-            day_ranges[day.lower()[:3]] = self.parse_time_range(time_range)
+            day = day.lower()[:3]
+            if day not in day_ranges:
+                day_ranges[day] = [self.parse_time_range(time_range)]
+            else:
+                day_ranges[day].append(self.parse_time_range(time_range))
         return day_ranges
 
     def can_get_free_drink(self) -> bool:
@@ -125,12 +120,14 @@ class FreeDrinks:
         Check if the current time falls within a valid time range for the current day.
 
         Returns:
-            bool: True if the current time falls within a valid time range for the current day,
+            bool: True if the current time falls within a valid time range for the current day
 
         Example:
-            >>> can_get_free_drink("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
+            # Assuming the config_string is "Mon: 1200-1400 Tue: 0900-1100"
+            >>> free_drinks = FreeDrinks(config_string)
+            >>> free_drinks.can_get_free_drink()
             True # If the current day is Monday and the current time is 12:30 PM
-            >>> can_get_free_drink("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
+            >>> free_drinks.can_get_free_drink()
             False # If the current day is Tuesday and the current time is 12:30 PM
         """
         day_ranges = self.parse_config_string()
@@ -138,13 +135,14 @@ class FreeDrinks:
         current_day = current_datetime.strftime("%a").lower()[:3]
         current_time = current_datetime.time()
         if current_day in day_ranges:
-            start_time, end_time = day_ranges[current_day]
-            if end_time == time.max:
-                if start_time <= current_time <= end_time:
-                    return True
-            else:
-                if start_time <= current_time < end_time:
-                    return True
+            for day_range in day_ranges[current_day]:
+                start_time, end_time = day_range
+                if end_time == time.max:
+                    if start_time <= current_time <= end_time:
+                        return True
+                else:
+                    if start_time <= current_time < end_time:
+                        return True
         return False
 
 
