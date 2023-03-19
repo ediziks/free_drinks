@@ -149,9 +149,8 @@ class FreeDrinks:
 
 
 if __name__ == "__main__":
-    config_string = "Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400 Sun: 0900-2000"
-    # Alternatively, the config string can be asked from the user
-    # or can be done in terminal completely without the need for this script
+    with open("free_drinks/config.txt", "r") as f:
+        config_string = f.read().strip()
     free_drinks = FreeDrinks(config_string)
     result = free_drinks.can_get_free_drink()
     if result:
