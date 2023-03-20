@@ -165,12 +165,16 @@ class FreeDrinkEstimator:
         return False
 
 
-if __name__ == "__main__":
-    with open("free_drinks/config", "r") as f:
-        config_string = f.read().strip()
-    free_drinks = FreeDrinkEstimator(config_string)
-    result = free_drinks.can_get_free_drink()
-    if result:
-        print("Free drink time!")
-    else:
-        print("Sorry, no free drinks for now but you can still buy one!")
+def run():
+    if __name__ == "__main__":
+        with open("free_drinks/config", "r") as f:
+            config_string = f.read().strip()
+        free_drinks = FreeDrinkEstimator(config_string)
+        result = free_drinks.can_get_free_drink()
+        if result:
+            print("Free drink time!")
+        else:
+            print("Sorry, no free drinks for now but you can still buy one!")
+
+
+run()
