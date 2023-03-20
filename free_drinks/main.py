@@ -2,7 +2,7 @@ from datetime import datetime, time
 from typing import Tuple
 
 
-class FreeDrinks:
+class FreeDrinkEstimator:
     """
     A class to estimate free drinks promotion at vending machines.
     """
@@ -168,7 +168,7 @@ class FreeDrinks:
 if __name__ == "__main__":
     with open("free_drinks/config", "r") as f:
         config_string = f.read().strip()
-    free_drinks = FreeDrinks(config_string)
+    free_drinks = FreeDrinkEstimator(config_string)
     result = free_drinks.can_get_free_drink()
     if result:
         print("Free drink time!")

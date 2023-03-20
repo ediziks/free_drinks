@@ -6,18 +6,18 @@ from freezegun import freeze_time
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from free_drinks.main import FreeDrinks
+from free_drinks.main import FreeDrinkEstimator
 
 
 class TestFreeDrinks(unittest.TestCase):
     def setUp(self):
-        # Creates a FreeDrinks object with a valid config string
-        self.fd = FreeDrinks("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
-        self.fd_case2 = FreeDrinks(
+        # Creates a FreeDrinkEstimator object with a valid config string
+        self.fd = FreeDrinkEstimator("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
+        self.fd_case2 = FreeDrinkEstimator(
             "Mon: 1200-1400 Tue: 0900-1100 Fri: 2200-2400 Fri: 2000-2200"
         )
-        self.fd_case3 = FreeDrinks("")
-        self.fd_case4 = FreeDrinks("illegal input")
+        self.fd_case3 = FreeDrinkEstimator("")
+        self.fd_case4 = FreeDrinkEstimator("illegal input")
 
     def test_is_valid_day(self):
         self.assertTrue(self.fd.is_valid_day("Mon"))
