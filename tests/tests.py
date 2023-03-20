@@ -6,7 +6,7 @@ from freezegun import freeze_time
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from free_drinks.app import FreeDrinks
+from free_drinks.main import FreeDrinks
 
 
 class TestFreeDrinks(unittest.TestCase):
