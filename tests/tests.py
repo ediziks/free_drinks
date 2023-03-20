@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from free_drinks.main import FreeDrinkEstimator
 
 
-class TestFreeDrinks(unittest.TestCase):
+class TestFreeDrinkEstimator(unittest.TestCase):
     def setUp(self):
         # Creates a FreeDrinkEstimator object with a valid config string
         self.fd = FreeDrinkEstimator("Mon: 1200-1400 Tue: 0900-1100 Fri: 0000-2400")
