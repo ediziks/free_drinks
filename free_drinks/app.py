@@ -10,6 +10,30 @@ class FreeDrinks:
     def __init__(self, config_string: str):
         self.config_string = config_string
 
+    def is_valid_config_string(self) -> bool:
+        """
+        Check if a config string is valid. Return false if the config string is empty or contains invalid day or time range.
+
+        Returns:
+            bool: True if the config string is valid, False otherwise.
+
+        Example:
+            # Assuming the config_string is "Mon: 0900-1100 Tue: 0900-1100 Fri: 0000-2400"
+            >>> is_valid_config_string()
+            True
+            # Assuming the config_string is ""
+            >>> is_valid_config_string()
+            AssertionError: Invalid config_string
+        """
+        if (
+            not self.config_string
+            or self.config_string.isspace()
+            or self.config_string == ""
+        ):
+            assert False, "Invalid config_string provided"
+        else:
+            return True
+
     def is_valid_day(self, day: str) -> bool:
         """
         Check if a day string is valid.
@@ -19,9 +43,6 @@ class FreeDrinks:
 
         Returns:
             bool: True if the day string is valid, False otherwise.
-
-        Raises:
-            AssertionError: If the day string is invalid.
 
         Example:
             >>> is_valid_day("Tue")
@@ -44,9 +65,6 @@ class FreeDrinks:
 
         Returns:
             bool: True if the time range string is valid, False otherwise.
-
-        Raises:
-            AssertionError: If the time range string is invalid.
 
         Example:
             >>> is_valid_time_range("0900-1100")
@@ -101,6 +119,7 @@ class FreeDrinks:
             }
         """
         day_ranges = {}
+        self.is_valid_config_string()
         config_string = self.config_string
         config_string_list = config_string.split()
         for i in range(0, len(config_string_list), 2):
