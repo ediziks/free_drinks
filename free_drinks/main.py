@@ -166,7 +166,7 @@ class FreeDrinks:
 
 
 if __name__ == "__main__":
-    with open("free_drinks/config.txt", "r") as f:
+    with open("free_drinks/config", "r") as f:
         config_string = f.read().strip()
     free_drinks = FreeDrinks(config_string)
     result = free_drinks.can_get_free_drink()
