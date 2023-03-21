@@ -26,7 +26,7 @@ The following tools are required to be installed in the system to run the projec
 
 ### Project Setup
 
-- First, clone the repository and change directory to repo folder. Afterwards, create the dependenci
+- First, clone the repository and change directory to repo folder.
 ```bash
 git clone https://github.com/ediziks/free_drinks.git
 cd free_drinks
